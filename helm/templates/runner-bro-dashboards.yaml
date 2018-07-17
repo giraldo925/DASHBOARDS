@@ -1,0 +1,63 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "bro.fullname" . }}-runner-bro-dashboards
+data:
+  speedometer.json: | 
+    {
+      "type": "dashboard", 
+      "dashboard": { 
+        "title": "Speedometer",
+        "hits": 0,
+        "description": "",
+        "panelsJSON": "[{\"gridData\":{\"h\":3,\"i\":\"1\",\"w\":12,\"x\":0,\"y\":6},\"id\":\"documents\",\"panelIndex\":\"1\",\"type\":\"visualization\",\"version\":\"6.1.4\"},{\"gridData\":{\"h\":6,\"i\":\"3\",\"w\":12,\"x\":0,\"y\":0},\"id\":\"gigabytes\",\"panelIndex\":\"3\",\"type\":\"visualization\",\"version\":\"6.1.4\"}]",
+        "optionsJSON": "{\"darkTheme\":false,\"hidePanelTitles\":false,\"useMargins\":true}",
+        "uiStateJSON": "{\"P-3\":{\"vis\":{\"defaultColors\":{\"0 - 20000000000\":\"rgb(0,104,55)\",\"30000000000 - 50000000000\":\"rgb(255,255,190)\",\"50000000000 - 80000000000\":\"rgb(165,0,38)\"}}}}",
+        "version": 1,
+        "timeRestore": true,
+        "timeTo": "now",
+        "timeFrom": "now-1m",
+        "refreshInterval": {
+          "display": "Off",
+          "pause": false,
+          "value": 0
+        },
+        "kibanaSavedObjectMeta": {
+          "searchSourceJSON": "{\"query\":{\"language\":\"lucene\",\"query\":\"\"},\"filter\":[],\"highlightAll\":true,\"version\":true}"
+          }
+        }
+      }
+  traffic-stats.json: | 
+    {
+      "type": "dashboard",
+      "dashboard": { 
+        "title": "Traffic statistics",
+        "hits": 0,
+        "description": "",
+        "panelsJSON": "[{\"panelIndex\":\"1\",\"gridData\":{\"x\":0,\"y\":0,\"w\":6,\"h\":3,\"i\":\"1\"},\"version\":\"6.1.4\",\"type\":\"visualization\",\"id\":\"response-ports\"},{\"panelIndex\":\"2\",\"gridData\":{\"x\":6,\"y\":0,\"w\":6,\"h\":3,\"i\":\"2\"},\"version\":\"6.1.4\",\"type\":\"visualization\",\"id\":\"http-hosts\"},{\"panelIndex\":\"3\",\"gridData\":{\"x\":0,\"y\":3,\"w\":6,\"h\":3,\"i\":\"3\"},\"version\":\"6.1.4\",\"type\":\"visualization\",\"id\":\"dns-queries\"}]",
+        "optionsJSON": "{\"darkTheme\":false,\"useMargins\":true,\"hidePanelTitles\":false}",
+        "uiStateJSON": "{\"P-3\":{\"vis\":{\"params\":{\"sort\":{\"columnIndex\":null,\"direction\":null}}}}}",
+        "version": 1,
+        "timeRestore": false,
+        "kibanaSavedObjectMeta": {
+          "searchSourceJSON": "{\"query\":{\"query\":\"\",\"language\":\"lucene\"},\"filter\":[],\"highlightAll\":true,\"version\":true}"
+        }
+      }
+    }
+  suricata-alerts.json: | 
+    {
+      "type": "dashboard",
+      "dashboard": {
+        "title": "SURICATA",
+        "hits": 0,
+        "description": "",
+        "panelsJSON": "[{\"id\":\"suricata-severity-over-time\",\"type\":\"visualization\",\"panelIndex\":1,\"size_x\":12,\"size_y\":3,\"col\":1,\"row\":1},{\"id\":\"suricata-alert-categories\",\"type\":\"visualization\",\"panelIndex\":2,\"size_x\":4,\"size_y\":3,\"col\":1,\"row\":4},{\"id\":\"suricata-alerts\",\"type\":\"visualization\",\"panelIndex\":3,\"size_x\":5,\"size_y\":3,\"col\":5,\"row\":4}]",
+        "optionsJSON": "{\"darkTheme\":false}",
+        "uiStateJSON": "{\"P-2\":{\"vis\":{\"params\":{\"sort\":{\"columnIndex\":null,\"direction\":null}}}},\"P-3\":{\"vis\":{\"params\":{\"sort\":{\"columnIndex\":null,\"direction\":null}}}}}",
+        "version": 1,
+        "timeRestore": false,
+        "kibanaSavedObjectMeta": {
+          "searchSourceJSON": "{\"filter\":[{\"query\":{\"query_string\":{\"query\":\"*\",\"analyze_wildcard\":true}}}]}"
+          }
+        }
+    }

@@ -1,0 +1,163 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: bro-visualizations
+data:
+  documents.json: |
+    {
+      "type": "visualization",
+      "visualization": {
+        "title": "Documents Per Second",
+        "visState": "{\"title\":\"Documents Per Second\",\"type\":\"timelion\",\"params\":{\"expression\":\".es(index=*).label(\\\"Total documents\\\"),.es(index=bro-*).label(\\\"Bro documents\\\"),.es(index=suricata-*).label(\\\"Suricata documents\\\")\",\"interval\":\"auto\"},\"aggs\":[]}",
+        "uiStateJSON": "{}",
+        "description": "",
+        "version": 1,
+        "kibanaSavedObjectMeta": {
+          "searchSourceJSON": "{}"
+          }
+        }
+    }
+  gigabytes.json: | 
+    {
+      "type": "visualization",
+      "visualization": {
+        "title": "Gigabytes processed per minute",
+        "visState": "{\"title\":\"Gigabytes processed per minute\",\"type\":\"gauge\",\"params\":{\"type\":\"gauge\",\"addTooltip\":true,\"addLegend\":true,\"isDisplayWarning\":false,\"gauge\":{\"verticalSplit\":false,\"extendRange\":true,\"percentageMode\":false,\"gaugeType\":\"Arc\",\"gaugeStyle\":\"Full\",\"backStyle\":\"Full\",\"orientation\":\"vertical\",\"colorSchema\":\"Green to Red\",\"gaugeColorMode\":\"Labels\",\"colorsRange\":[{\"from\":0,\"to\":20000000000},{\"from\":30000000000,\"to\":50000000000},{\"from\":50000000000,\"to\":80000000000}],\"invertColors\":false,\"labels\":{\"show\":true,\"color\":\"black\"},\"scale\":{\"show\":true,\"labels\":false,\"color\":\"#333\"},\"type\":\"meter\",\"style\":{\"bgWidth\":0.9,\"width\":0.9,\"mask\":false,\"bgMask\":false,\"maskBars\":50,\"bgFill\":\"#eee\",\"bgColor\":false,\"subText\":\"\",\"fontSize\":60,\"labelColor\":true}}},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"sum\",\"schema\":\"metric\",\"params\":{\"field\":\"total bytes\",\"customLabel\":\"Traffic Flow Speedometer (GB/minute)\"}}]}",
+        "uiStateJSON": "{\"vis\":{\"defaultColors\":{\"0 - 20000000000\":\"rgb(0,104,55)\",\"30000000000 - 50000000000\":\"rgb(255,255,190)\",\"50000000000 - 80000000000\":\"rgb(165,0,38)\"}}}",
+        "description": "",
+        "version": 1,
+        "kibanaSavedObjectMeta": {
+          "searchSourceJSON": "{\"index\":\"bro\",\"filter\":[],\"query\":{\"language\":\"lucene\",\"query\":\"\"}}"
+          }
+        }
+    }
+  http-hosts.json: | 
+    {
+      "type": "visualization",
+      "visualization": {
+        "title": "Top 10 HTTP hosts requested",
+        "visState": "{\"aggs\":[{\"enabled\":true,\"id\":\"1\",\"params\":{},\"schema\":\"metric\",\"type\":\"count\"},{\"enabled\":true,\"id\":\"2\",\"params\":{\"customLabel\":\"Host\",\"field\":\"host.keyword\",\"size\":10},\"schema\":\"segment\",\"type\":\"significant_terms\"}],\"params\":{\"addLegend\":true,\"addTimeMarker\":false,\"addTooltip\":true,\"categoryAxes\":[{\"id\":\"CategoryAxis-1\",\"labels\":{\"show\":true,\"truncate\":100},\"position\":\"bottom\",\"scale\":{\"type\":\"linear\"},\"show\":true,\"style\":{},\"title\":{},\"type\":\"category\"}],\"grid\":{\"categoryLines\":false,\"style\":{\"color\":\"#eee\"}},\"legendPosition\":\"right\",\"seriesParams\":[{\"data\":{\"id\":\"1\",\"label\":\"Count\"},\"drawLinesBetweenPoints\":true,\"mode\":\"stacked\",\"show\":\"true\",\"showCircles\":true,\"type\":\"histogram\",\"valueAxis\":\"ValueAxis-1\"}],\"times\":[],\"type\":\"histogram\",\"valueAxes\":[{\"id\":\"ValueAxis-1\",\"labels\":{\"filter\":false,\"rotate\":0,\"show\":true,\"truncate\":100},\"name\":\"LeftAxis-1\",\"position\":\"left\",\"scale\":{\"mode\":\"normal\",\"type\":\"linear\"},\"show\":true,\"style\":{},\"title\":{\"text\":\"Count\"},\"type\":\"value\"}]},\"title\":\"Top 10 HTTP hosts requested\",\"type\":\"histogram\"}",
+        "uiStateJSON": "{}",
+        "description": "",
+        "version": 1,
+        "kibanaSavedObjectMeta": {
+          "searchSourceJSON": "{\"index\":\"bro\",\"filter\":[],\"query\":{\"language\":\"lucene\",\"query\":\"\"}}"
+          }
+        }
+    }
+  response-ports.json: | 
+    {
+      "type": "visualization",
+      "visualization": {
+        "title": "Top 10 Response Ports",
+        "visState": "{\"title\":\"Top 10 Response Ports\",\"type\":\"pie\",\"params\":{\"type\":\"pie\",\"addTooltip\":true,\"addLegend\":true,\"legendPosition\":\"right\",\"isDonut\":true,\"labels\":{\"show\":false,\"values\":true,\"last_level\":true,\"truncate\":100}},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{\"customLabel\":\"Bro-Top 10 Resp Ports\"}},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"bro_id_resp_p\",\"size\":10,\"order\":\"desc\",\"orderBy\":\"1\"}}]}",
+        "uiStateJSON": "{}",
+        "description": "",
+        "version": 1,
+        "kibanaSavedObjectMeta": {
+          "searchSourceJSON": "{\"index\":\"bro\",\"filter\":[],\"query\":{\"query\":\"source: \\\"/bro/logger/conn.log\\\"\",\"language\":\"lucene\"}}"
+          }
+        }
+    }
+  word-cloud-ports.json: |
+    {
+      "type": "visualization",
+      "visualization": {
+        "title": "Word cloud of Bro Events",
+        "visState": "{\"title\":\"Word cloud of Bro Events\",\"type\":\"tagcloud\",\"params\":{\"scale\":\"linear\",\"orientation\":\"single\",\"minFontSize\":18,\"maxFontSize\":72},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"source.keyword\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"Bro Events\"}}]}",
+        "uiStateJSON": "{}",
+        "description": "",
+        "version": 1,
+        "kibanaSavedObjectMeta": {
+          "searchSourceJSON": "{\"index\":\"bro\",\"filter\":[],\"query\":{\"query\":\"\",\"language\":\"lucene\"}}"
+          }
+        }
+    }
+  bro-documents-per-second.json: | 
+    {
+      "type": "visualization",
+      "visualization": {
+        "title": "Bro Documents Per Second by category",
+        "visState": "{\"title\":\"Bro Documents Per Second by category\",\"type\":\"timelion\",\"params\":{\"expression\":\".es(index=bro-*),.es(index=bro-*,q='source: \\\"/bro/logger/http.log\\\"'),.es(index=bro-*,q='source: \\\"/bro/logger/conn.log\\\"'),.es(index=bro-*,q='source: \\\"/bro/logger/dns.log\\\"'),\",\"interval\":\"auto\"},\"aggs\":[]}",
+        "uiStateJSON": "{}",
+        "description": "",
+        "version": 1,
+        "kibanaSavedObjectMeta": {
+          "searchSourceJSON": "{}"
+          }
+        }
+    }
+  dns-queries.json: | 
+    {
+      "type": "visualization",
+      "visualization": {
+        "title": "Unique DNS queries",
+        "visState": "{\"aggs\":[{\"enabled\":true,\"id\":\"1\",\"params\":{\"customLabel\":\"Top DNS queries\"},\"schema\":\"metric\",\"type\":\"count\"},{\"enabled\":true,\"id\":\"2\",\"params\":{\"field\":\"query.keyword\",\"size\":10},\"schema\":\"bucket\",\"type\":\"significant_terms\"}],\"params\":{\"perPage\":10,\"showMeticsAtAllLevels\":false,\"showPartialRows\":false,\"showTotal\":false,\"sort\":{\"columnIndex\":null,\"direction\":null},\"totalFunc\":\"sum\"},\"title\":\"Unique DNS queries\",\"type\":\"table\"}",
+        "uiStateJSON": "{\"vis\":{\"params\":{\"sort\":{\"columnIndex\":null,\"direction\":null}}}}",
+        "description": "",
+        "version": 1,
+        "kibanaSavedObjectMeta": {
+          "searchSourceJSON": "{\"index\":\"bro\",\"filter\":[],\"query\":{\"language\":\"lucene\",\"query\":\"source: \\\"/bro/logger/dns.log\\\"\"}}"
+          }
+        }
+    }
+    
+  suricata-alerts.json: | 
+    {
+      "type": "visualization",
+      "visualization": { 
+        "title": "SURICATA Alerts",
+        "visState": "{\"title\":\"SURICATA Alerts\",\"type\":\"table\",\"params\":{\"perPage\":10,\"showPartialRows\":false,\"showMeticsAtAllLevels\":false,\"sort\":{\"columnIndex\":null,\"direction\":null},\"showTotal\":false,\"totalFunc\":\"sum\"},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"alert.signature.keyword\",\"size\":5000,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"Signature\"}}],\"listeners\":{}}",
+        "uiStateJSON": "{\"vis\":{\"params\":{\"sort\":{\"columnIndex\":null,\"direction\":null}}}}",
+        "description": "",
+        "savedSearchId": "suricata-alerts",
+        "version": 1,
+        "kibanaSavedObjectMeta": {
+          "searchSourceJSON": "{\"filter\":[]}"
+          }
+        }
+      }
+    
+    
+  suricata-alerts-categories.json: | 
+    {
+      "type": "visualization",
+      "visualization": {
+        "title": "SURICATA Alert Categories",
+        "visState": "{\"title\":\"SURICATA Alert Categories\",\"type\":\"table\",\"params\":{\"perPage\":10,\"showPartialRows\":false,\"showMeticsAtAllLevels\":false,\"sort\":{\"columnIndex\":null,\"direction\":null},\"showTotal\":false,\"totalFunc\":\"sum\"},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"alert.category.keyword\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"Category\"}}],\"listeners\":{}}",
+        "uiStateJSON": "{\"vis\":{\"params\":{\"sort\":{\"columnIndex\":null,\"direction\":null}}}}",
+        "description": "",
+        "savedSearchId": "suricata-alerts",
+        "version": 1,
+        "kibanaSavedObjectMeta": {
+          "searchSourceJSON": "{\"filter\":[]}"
+          }
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

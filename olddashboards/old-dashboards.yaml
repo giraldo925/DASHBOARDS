@@ -1,0 +1,81 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: { template "bro.fullname" . }}-runner-bro-dashboards
+spec:
+  containers:
+    - name: visualization
+      image: gcr.io/edcop-public/runner:latest
+      securityContext:
+        privileged: true
+      env:
+      - name: ELASTICSEARCH
+        value: http://data-service:9200
+      - name: CURL
+        value: '/usr/bin/curl'
+      - name: VIS_DIR
+        value: /etc/visualization
+      - name: SEARCH_DIR
+        value: /etc/search
+      - name: DASH_DIR
+        value: /etc/dashboard
+      - name: KIBANA_INDEX
+        value: .kibana
+      - name: STARTUP_SCRIPT
+        value: |
+          #!/bin/bash
+          # create index
+          ${CURL} -XPUT ${ELASTICSEARCH}/${KIBANA_INDEX}
+          # create index pattern
+          cd /etc/index
+          ${CURL} -XPUT -H 'Content-Type:application/json' ${ELASTICSEARCH}/${KIBANA_INDEX}/doc/index-pattern:bro  -d @bro.json
+          ${CURL} -XPUT -H 'Content-Type:application/json' ${ELASTICSEARCH}/${KIBANA_INDEX}/doc/index-pattern:suricata  -d @suricata.json
+          # create search
+          for file in ${SEARCH_DIR}/*.json
+              do
+                NAME=`basename ${file} .json`
+                 echo "Loading Search ${NAME}:"
+                 ${CURL} -XPUT  -H 'Content-Type:application/json' ${ELASTICSEARCH}/${KIBANA_INDEX}/doc/search:${NAME} -d @${file}
+                      echo
+              done
+          # create visualization
+          for file in ${VIS_DIR}/*.json
+              do
+                NAME=`basename ${file} .json`
+                 echo "Loading dashboard ${NAME}:"
+                 ${CURL} -XPUT  -H 'Content-Type:application/json' ${ELASTICSEARCH}/${KIBANA_INDEX}/doc/visualization:${NAME} -d @${file}
+                      echo
+              done
+          # Create Dahboards 
+          for file in ${DASH_DIR}/*.json
+              do
+                NAME=`basename ${file} .json`
+                 echo "Loading dashboard ${NAME}:"
+                 ${CURL} -XPUT  -H 'Content-Type:application/json' ${ELASTICSEARCH}/${KIBANA_INDEX}/doc/dashboard:${NAME} -d @${file}
+                      echo
+              done
+      volumeMounts:
+      - name: visualization
+        mountPath: /etc/visualization
+      - name: index
+        mountPath: /etc/index
+      - name: search
+        mountPath: /etc/search
+      - name: dashboard
+        mountPath: /etc/dashboard
+  volumes:
+    - name: visualization
+      configMap:
+        name: bro-visualizations
+    - name: index
+      configMap:
+        name: bro-index
+    - name: search
+      configMap:
+        name: bro-search
+    - name: dashboard
+      configMap:
+        name: bro-dashboards
+  restartPolicy: Never
+
+  

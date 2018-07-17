@@ -1,0 +1,131 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: bro-search
+data:
+  dns.json: | 
+    {
+      "type" : "search",
+      "search": {
+        "title": "dns",
+        "description": "",
+        "hits": 0,
+        "columns": [
+          "_source"
+        ],
+        "sort": [
+          "@timestamp",
+          "desc"
+        ],
+        "version": 1,
+        "kibanaSavedObjectMeta": {
+          "searchSourceJSON": "{\"index\":\"bro-*\",\"highlightAll\":true,\"version\":true,\"query\":{\"language\":\"lucene\",\"query\":\"dns\"},\"filter\":[]}"
+        }
+      }
+    }
+  
+  conn.json: |  
+    {
+      "type" : "search",
+      "search": {
+        "title": "conn",
+        "description": "",
+        "hits": 0,
+        "columns": [
+          "_source"
+        ],
+        "sort": [
+          "@timestamp",
+          "desc"
+        ],
+        "version": 1,
+        "kibanaSavedObjectMeta": {
+          "searchSourceJSON": "{\"index\":\"bro-*\",\"highlightAll\":true,\"version\":true,\"query\":{\"query\":\"conn\",\"language\":\"lucene\"},\"filter\":[]}"
+        }
+      }
+    }
+  
+  files.json: |   
+    {
+      "type" : "search",
+      "search": {
+        "title": "files",
+        "description": "",
+        "hits": 0,
+        "columns": [
+          "_source"
+        ],
+        "sort": [
+          "@timestamp",
+          "desc"
+        ],
+        "version": 1,
+        "kibanaSavedObjectMeta": {
+          "searchSourceJSON": "{\"index\":\"bro-*\",\"highlightAll\":true,\"version\":true,\"query\":{\"query\":\"files\",\"language\":\"lucene\"},\"filter\":[]}"
+        }
+      }
+    }
+
+  
+  http.json: |   
+    {
+      "type" : "search",
+      "search": {
+        "title": "http",
+        "description": "",
+        "hits": 0,
+        "columns": [
+          "_source"
+        ],
+        "sort": [
+          "@timestamp",
+          "desc"
+        ],
+        "version": 1,
+        "kibanaSavedObjectMeta": {
+          "searchSourceJSON": "{\"index\":\"bro-*\",\"highlightAll\":true,\"version\":true,\"query\":{\"query\":\"http\",\"language\":\"lucene\"},\"filter\":[]}"
+        }
+      }
+    }
+
+  notice.json: |   
+    {
+      "type" : "search",
+      "search": {
+        "title": "notice",
+        "description": "",
+        "hits": 0,
+        "columns": [
+          "_source"
+        ],
+        "sort": [
+          "@timestamp",
+          "desc"
+        ],
+        "version": 1,
+        "kibanaSavedObjectMeta": {
+          "searchSourceJSON": "{\"index\":\"bro-*\",\"highlightAll\":true,\"version\":true,\"query\":{\"query\":\"notice\",\"language\":\"lucene\"},\"filter\":[]}"
+        }
+      }
+    }
+  
+  ssl.json: |   
+    {
+      "type" : "search",
+      "search": {
+        "title": "ssl",
+        "description": "",
+        "hits": 0,
+        "columns": [
+          "_source"
+        ],
+        "sort": [
+          "@timestamp",
+          "desc"
+        ],
+        "version": 1,
+        "kibanaSavedObjectMeta": {
+          "searchSourceJSON": "{\"index\":\"bro-*\",\"highlightAll\":true,\"version\":true,\"query\":{\"query\":\"ssl\",\"language\":\"lucene\"},\"filter\":[]}"
+        }
+      }
+    }
