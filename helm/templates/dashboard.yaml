@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: { template "bro.fullname" . }}-runner-bro-dashboards
+  name: {{ template "bro.fullname" . }}-runner-bro-dashboards
 spec:
   containers:
     - name: visualization
@@ -23,9 +23,6 @@ spec:
         value: .kibana
       - name: STARTUP_SCRIPT
         value: |
-          #!/bin/bash
-          # create index
-          ${CURL} -XPUT ${ELASTICSEARCH}/${KIBANA_INDEX}
           # create index pattern
           cd /etc/index
           ${CURL} -XPUT -H 'Content-Type:application/json' ${ELASTICSEARCH}/${KIBANA_INDEX}/doc/index-pattern:bro  -d @bro.json
@@ -66,7 +63,7 @@ spec:
   volumes:
     - name: visualization
       configMap:
-        name: { template "bro.fullname" . }}-runner-bro-visualizations
+        name: {{ template "bro.fullname" . }}-runner-bro-visualizations
     - name: index
       configMap:
         name: {{ template "bro.fullname" . }}-runner-bro-index-pattern
